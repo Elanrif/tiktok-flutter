@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/rendering.dart';
 import 'package:video_player/video_player.dart';
 
 void main() {
@@ -40,7 +41,7 @@ class _BottomNavigationBarTiktokState extends State<BottomNavigationBarTiktok> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('post video')),
+      body: HomePage(),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
@@ -67,6 +68,42 @@ class _BottomNavigationBarTiktokState extends State<BottomNavigationBarTiktok> {
         showUnselectedLabels: false,
         onTap: _onItemTapped,
       ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  HomePage({super.key});
+  final List<Map> tiktokItems = [
+    {
+      "title": "1",
+      "color": Colors.blue,
+    },
+    {"title": "2", "color": Colors.red},
+    {"title": "3", "color": Colors.green}
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: double.infinity,
+        scrollDirection: Axis.vertical,
+        viewportFraction: 1.0,
+      ),
+      items: tiktokItems.map((item) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              color: item['color'],
+              child: Center(
+                child: Text("text ${item['title']}", 
+                style: TextStyle(fontSize: 16.0)),
+              ),
+            );
+          },
+        );
+      }).toList(),
     );
   }
 }
